@@ -1,0 +1,29 @@
+---
+// "/src/layout/PrimaryLayout.astro"
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Background from '../components/Background.astro';
+
+const { title } = Astro.props;
+---
+<Layout title={title}>
+    <Header />
+    <div id="page-content">
+        <div id="content-pusher"></div>
+        <slot />
+    </div>
+</Layout>
+<style>
+    #page-content {
+        min-height: 100%;
+        background: radial-gradient(rgb(91 89 212 / 0.9), rgb(20 10 44 / 0.99));
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    #content-pusher {
+        height: 4em;
+        background-color: #5b59d4;
+    }
+</style>

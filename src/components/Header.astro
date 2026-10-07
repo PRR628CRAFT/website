@@ -1,0 +1,164 @@
+---
+// "/src/components/Header.astro"
+const { pathname } = Astro.url;
+const navItems = [
+    {"label": "Projects","link": "projects"},
+    {"label": "Blog","link": "blog"},
+    {"label": "Contact","link": "contact"},
+    {"label": "About Me","link": "about"},
+    {"label": "Minecraft Server","link": "minecraft-server"}
+]
+const isLandingPage = pathname === "/";
+---
+<header class="site-header">
+    <button id="mobile-header-search" class="mobile-header-icon" aria-label="Search Site">
+        <img src="/icons/search.svg" alt="Search">
+    </button>
+    { !isLandingPage && (
+        <a href="/"><img src="/LongLogo.svg" height="48em" alt="PRR628CRAFT"></a>
+    )}
+    <button id="mobile-header-dropdown" class="mobile-header-icon" aria-label="Toggle Navigation Menu">
+        <!-- Added an ID here to target the image wrapper specifically for the source swap -->
+        <img id="menu-icon-img" src="/icons/hamburger.svg" alt="Menu">
+    </button>
+
+    <nav class="header-navbar" id="navbar-menu">
+        <ul class="header-navbar__list">
+            {
+                navItems.map((item) => {
+                    return (
+                            <li class:list={[`header-navbar__item ${item.link}-link`, {'header-navbar__item--active': pathname}]}>
+                                <a class="navbar-item-link" href={item.link}>{item.label}</a>
+                            </li>
+                    );
+                })
+            }
+        </ul>
+    </nav>
+</header>
+
+<script>
+    const dropdownBtn = document.getElementById('mobile-header-dropdown');
+    const navbarMenu = document.getElementById('navbar-menu');
+    const menuIconImg = document.getElementById('menu-icon-img') as HTMLImageElement;
+
+    // Relative icon paths
+    const burgerSrc = "/icons/hamburger.svg";
+    const closeSrc = "/icons/close.svg";
+
+    function toggleMenu() {
+        if (!navbarMenu || !menuIconImg) return;
+
+        const isOpen = navbarMenu.classList.toggle('is-active');
+
+        // Swap image source and alt tags dynamically
+        menuIconImg.src = isOpen ? closeSrc : burgerSrc;
+        menuIconImg.alt = isOpen ? "Close Menu" : "Menu";
+    }
+
+    dropdownBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleMenu();
+    });
+
+    document.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        if (navbarMenu && !navbarMenu.contains(target) && !dropdownBtn?.contains(target)) {
+            // Only trigger if the menu is actively open to sync the icon state
+            if (navbarMenu.classList.contains('is-active')) {
+                toggleMenu();
+            }
+        }
+    });
+</script>
+
+<style>
+    .site-header {
+        position: fixed;
+        top: 0;
+        margin: 0;
+        padding: 0 2em;
+        height: 4em;
+        width: calc(100% - 4em);
+        background: linear-gradient(rgb(43 58 227 / 0.9), rgb(49 48 140 / 0.9));
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+    }
+    .mobile-header-icon {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        height: 2em;
+    }
+    .mobile-header-icon img {
+        height: 100%;
+        display: block;
+    }
+    #mobile-header-search {
+        cursor: not-allowed;
+    }
+    nav.header-navbar {
+        display: none;
+        position: fixed;
+        top: 4em;
+        right: 0;
+    }
+    nav.header-navbar.is-active {
+        display: block;
+    }
+    .header-navbar__list {
+        text-align: center;
+        background-color: rgb(49 48 140 / 0.9);
+        height: 18em;
+        width: 10em;
+        justify-content: space-between;
+        display: flex;
+        flex-direction: column;
+        list-style-type: none;
+        padding: 1em 0;
+        margin: 0;
+        border-bottom-left-radius: 20px; /* Changed to left side since navigation maps from right: 0 */
+    }
+
+    .header-navbar__item .navbar-item-link {
+        appearance: none;
+        padding: 1em;
+        font-family: "Droid Sans", sans-serif;
+        text-decoration: none;
+        color: #fff;
+        display: block;
+    }
+    .header-navbar__item .navbar-item-link:hover {
+        background-color: rgb(255 255 255 / 0.1);
+    }
+    .server
+    @media (min-width: 750px) {
+        .site-header {
+            padding: 0 2em;
+        }
+        nav.header-navbar {
+            display: block;
+            position: relative;
+            top: 0;
+            right: 0;
+            margin-left: auto;
+        }
+        .header-navbar__list {
+            background-color: transparent;
+            height: auto;
+            width: auto;
+            display: flex;
+            flex-direction: row;
+            list-style-type: none;
+            padding: 0;
+            border-bottom-left-radius: 0;
+        }
+        .mobile-header-icon {
+            display: none;
+        }
+    }
+</style>

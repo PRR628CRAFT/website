@@ -1,0 +1,31 @@
+---
+// "/src/components/ContentBlock.astro"
+const { class: className = "" } = Astro.props;
+---
+<section class={`content-block markdown-body ${className}`}>
+    <slot />
+</section>
+
+<style>
+    .content-block {
+        color: white;
+        padding: 20px;
+        margin: 10px 0;
+        display: flex;
+        flex-direction: column;
+        background-color: #23214095;
+        border-radius: 10px;
+        width: calc(100% - 4em);
+    }
+
+    #home-hero__content {
+        display: flex;
+        flex-direction: row;
+    }
+    @media (min-width: 1048px) {
+        .content-block {
+            max-width: 1024px;
+            border-radius: 10px;
+        }
+    }
+</style>

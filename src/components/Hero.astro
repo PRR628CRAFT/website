@@ -1,0 +1,25 @@
+---
+// "/src/components/Hero.astro"
+import ButtonRow from "./ButtonRow.astro"
+---
+<div id="home-hero">
+    <div id="home-hero__content">
+        <slot />
+    </div>
+</div>
+<style>
+    #home-hero {
+        position: relative;
+        min-height: calc(100vh - 4em);
+        background: radial-gradient(rgb(91 89 212 / 0.9), rgb(20 10 44 / 0.99));
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-family: ui-rounded, sans-serif;
+    }
+    #home-hero__content {
+        display: flex;
+        flex-direction: row;
+    }
+</style>

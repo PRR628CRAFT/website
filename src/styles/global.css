@@ -1,0 +1,36 @@
+html {
+    background-image: url("/Background.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    background-color: #140a2c;
+}
+
+.prr-button {
+    background-color: #2a79d4;
+    text-decoration: none;
+    color: #fff;
+    padding: 0.9em 1em;
+    border-radius: 10px;
+}
+.prr-button:hover {
+    background-color: #368aeb;
+    cursor: pointer;
+    transform: translate(0, -0.25em)
+}
+
+.prr-button-outline {
+    background-color: rgb(0 0 0 / 0.1);
+    border: #2a79d4 solid 3px;
+    text-decoration: none;
+    color: #fff;
+    padding: 0.75em 1em;
+    border-radius: 10px;
+}
+.prr-button-outline:hover {
+    background-color: rgb(100 100 100 / 0.1);
+    cursor: pointer;
+    border: #368aeb solid 3px;
+    transform: translate(0, -0.25em)
+}
