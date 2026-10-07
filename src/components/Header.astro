@@ -1,6 +1,10 @@
 ---
 // "/src/components/Header.astro"
 const { pathname } = Astro.url;
+import { Image } from 'astro:assets';
+import LongLogo from '../assets/LongLogo.svg';
+import MobileSearch from '../assets/icons/search.svg';
+import MobileDropdown from '../assets/icons/hamburger.svg';
 const navItems = [
     {"label": "Projects","link": "projects"},
     {"label": "Blog","link": "blog"},
@@ -12,27 +16,40 @@ const isLandingPage = pathname === "/";
 ---
 <header class="site-header">
     <button id="mobile-header-search" class="mobile-header-icon" aria-label="Search Site">
-        <img src="/icons/search.svg" alt="Search">
+        <Image src={MobileSearch} alt="Search"/>
     </button>
     { !isLandingPage && (
-        <a href="/"><img src="/LongLogo.svg" height="48em" alt="PRR628CRAFT"></a>
+        <a href="/"><Image src={LongLogo} height="48em" alt="PRR628CRAFT"/></a>
     )}
     <button id="mobile-header-dropdown" class="mobile-header-icon" aria-label="Toggle Navigation Menu">
         <!-- Added an ID here to target the image wrapper specifically for the source swap -->
-        <img id="menu-icon-img" src="/icons/hamburger.svg" alt="Menu">
+        <Image id="menu-icon-img" src={MobileDropdown} alt="Menu"/>
     </button>
 
     <nav class="header-navbar" id="navbar-menu">
         <ul class="header-navbar__list">
-            {
-                navItems.map((item) => {
-                    return (
-                            <li class:list={[`header-navbar__item ${item.link}-link`, {'header-navbar__item--active': pathname}]}>
-                                <a class="navbar-item-link" href={item.link}>{item.label}</a>
-                            </li>
-                    );
-                })
-            }
+            {navItems.map((item) => {
+                const href = `/${item.link}`;
+                const isActive = pathname === href || pathname.startsWith(`${href}/`);
+
+                return (
+                        <li
+                                class:list={[
+                                    "header-navbar__item",
+                                    `${item.link}-link`,
+                                    {"header-navbar__item--active": isActive},
+                                ]}
+                        >
+                            <a
+                                    class="navbar-item-link"
+                                    href={href}
+                                    aria-current={isActive ? "page" : undefined}
+                            >
+                                {item.label}
+                            </a>
+                        </li>
+                        );
+                })}
         </ul>
     </nav>
 </header>
@@ -42,16 +59,14 @@ const isLandingPage = pathname === "/";
     const navbarMenu = document.getElementById('navbar-menu');
     const menuIconImg = document.getElementById('menu-icon-img') as HTMLImageElement;
 
-    // Relative icon paths
-    const burgerSrc = "/icons/hamburger.svg";
-    const closeSrc = "/icons/close.svg";
+    const burgerSrc = {MobileDropdown};
+    const closeSrc = {MobileSearch};
 
     function toggleMenu() {
         if (!navbarMenu || !menuIconImg) return;
 
         const isOpen = navbarMenu.classList.toggle('is-active');
 
-        // Swap image source and alt tags dynamically
         menuIconImg.src = isOpen ? closeSrc : burgerSrc;
         menuIconImg.alt = isOpen ? "Close Menu" : "Menu";
     }
@@ -64,7 +79,6 @@ const isLandingPage = pathname === "/";
     document.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
         if (navbarMenu && !navbarMenu.contains(target) && !dropdownBtn?.contains(target)) {
-            // Only trigger if the menu is actively open to sync the icon state
             if (navbarMenu.classList.contains('is-active')) {
                 toggleMenu();
             }
@@ -135,7 +149,9 @@ const isLandingPage = pathname === "/";
     .header-navbar__item .navbar-item-link:hover {
         background-color: rgb(255 255 255 / 0.1);
     }
-    .server
+    .server-link {
+        border: 3px solid rgb(255 255 255 / 0.1);
+    }
     @media (min-width: 750px) {
         .site-header {
             padding: 0 2em;

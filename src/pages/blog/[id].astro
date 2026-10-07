@@ -26,7 +26,7 @@ const update = post.data.updatedDate?.toLocaleDateString('en-GB', {
     day: 'numeric',
 });
 ---
-<PrimaryLayout>
+<PrimaryLayout title=`${post.data.title} - PRR628CRAFT Blog`>
     <ContentBlock>
         <h1>{post.data.title}</h1>
         <p>

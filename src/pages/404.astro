@@ -1,12 +1,15 @@
 ---
 // "/src/pages/index.astro"
+import { Image } from 'astro:assets';
 import CoverLayout from '../layouts/CoverLayout.astro';
 import Hero from '../components/Hero.astro';
+import ErrorImage from '../assets/404.svg';
+
 ---
 <CoverLayout title="404 - PRR628CRAFT">
     <Hero height="14.7em">
         <div id="home-hero__cta">
-            <img id="hero-logo" src="/404.svg" width="400em" height="123em" alt="PRR628CRAFT">
+            <Image id="hero-logo" src={ErrorImage} width="400em" height="123em" alt="Error 404"/>
             <p id="hero-content__paragraph">The page could not be found! It might have been moved or mispelled :(</p>
             <div id="hero-button-row">
                 <a class="prr-button" href="/projects">Explore</a>
