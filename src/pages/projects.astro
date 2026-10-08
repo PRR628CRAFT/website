@@ -1,4 +1,9 @@
 ---
+// "/src/pages/projects.astro"
+import { Image } from 'astro:assets';
+import Website from '../assets/projects/website/thumbnail.png';
+import PetTransfer from '../assets/projects/pet-transfer/thumbnail.png';
+import Placeholder from '../assets/placeholder.png';
 import PrimaryLayout from "../layouts/PrimaryLayout.astro";
 import ContentBlock from "../components/ContentBlock.astro";
 
@@ -6,6 +11,7 @@ const projectBoxes = [
     {
         name: "Personal Website",
         desc: "This very website! Part blog, part portfolio.",
+        img: Website,
         link: "website",
         tags: [
             "HTML",
@@ -16,6 +22,7 @@ const projectBoxes = [
     {
         name: "Pet Transfer",
         desc: "Transfer your pets in Minecraft to new owners!",
+        img: PetTransfer,
         link: "pet-transfer",
         tags: [
             "Minecraft Mod",
@@ -26,6 +33,7 @@ const projectBoxes = [
     {
         name: "PRR628CRAFT Network",
         desc: "A network of Minecraft servers hosted by me!",
+        img: Placeholder,
         link: "minecraft-server",
         tags: [
             "Minecraft",
@@ -48,9 +56,9 @@ const projectBoxes = [
             projectBoxes.map((item) => (
                     <a class="project-link" href={`/project/${item.link}`}>
                         <div class="project-box">
-                            <img
+                            <Image
                                     class="project-box__img"
-                                    src={`/assets/projects/${item.link}/thumbnail.png`}
+                                    src={item.img}
                                     alt={item.name}
                             />
 
